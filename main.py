@@ -1,3 +1,4 @@
+from datetime import datetime
 from sudoku.solver import SquareSudokuSolver
 
 
@@ -12,10 +13,22 @@ if __name__ == '__main__':
             [2, None, None, 8, None, 4, None, None, 7],
             [None, 1, None, 9, None, 7, None, 6, None]]
 
+    start = datetime.now()
     try:
         solver = SquareSudokuSolver(data, 3)
-        print(solver.n_steps)
-        solver.keep_iterations()
-        print(solver.n_steps)
-    except AssertionError as e:
+        solver.solve()
+        validity = True
+    except ValueError:
+        validity = False
+    except Exception as e:
+        validity = False
         print(e)
+    end = datetime.now()
+    print('-' * 28)
+    print('Result:')
+    print(solver.mat_obj if validity else None)
+    print('Statistic:')
+    print('    total time : {:>8.3f} ms'.format((end - start).microseconds / 1000))
+    print('    validity   : {!s:>11}'.format(validity))
+    print('-' * 28)
+    # print(solver.numbers_trace)
