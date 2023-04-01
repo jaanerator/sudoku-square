@@ -18,11 +18,11 @@ class SquareSudokuSolver:
         return
     
     def solve(self):
-        self.run()
+        solve_result = self.run()
         self.min_cands_row = None
         self.min_cands_col = None
         self.mat_saved = []
-        return
+        return solve_result
     
     def run(self):
         self.keep_iterations()
@@ -34,11 +34,7 @@ class SquareSudokuSolver:
             row = self.min_cands_row
             col = self.min_cands_col
             tracks = self.mat_candidates[row][col]
-            if len(tracks) == 0:
-                result = False
-                self.mat_obj, self.mat_candidates = self.mat_saved.pop()
-                self.numbers_trace.pop()
-            else:
+            if len(tracks) > 0:
                 self.mat_saved.append((deepcopy(self.mat_obj), deepcopy(self.mat_candidates)))
                 for alter in tracks:
                     self.mat_obj.insert(row, col, alter)
@@ -46,6 +42,12 @@ class SquareSudokuSolver:
                     result = self.run()
                     if result:
                         break
+            elif len(self.mat_saved) == 0:
+                result = False
+            else:
+                result = False
+                self.mat_obj, self.mat_candidates = self.mat_saved.pop()
+                self.numbers_trace.pop()
         return result
     
     def keep_iterations(self):
