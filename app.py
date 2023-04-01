@@ -199,7 +199,7 @@ class SudokuAppWindow(Application):
 
 if __name__ == '__main__':
     configs = {'master_title': 'Squared Sudoku Solver',
-            #    'icon': './figure/sudoku_icon.ico',
+               'icon': './figure/sudoku_icon.ico',
                'window_size': (1000, 400),
                'resizable': False}
     
